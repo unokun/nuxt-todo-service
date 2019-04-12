@@ -64,7 +64,9 @@ export const actions = {
           const data = doc.data()
           const { title, body } = data
           // timestamp(firestore) -> date(js)
+          // [TODO]strict=falseにしないとエラーになる
           const created_at = data.created_at.toDate()
+
           commit ('addTodo', { todo: { title, body, created_at } })
       })
   })

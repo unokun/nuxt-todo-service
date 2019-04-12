@@ -1,9 +1,5 @@
 <template>
   <section class="container todos-page">
-    <div class="text-right">
-      <el-button type="primary" @click="onClick">Todo一覧取得</el-button>
-    </div>
-
     <el-card>
       <div slot="header" class="clearfix">
         <span>TODO一覧</span>
@@ -31,7 +27,6 @@ import firebase from '~/plugins/firebase'
 export default {
   async asyncData({ redirect, store }) {
       const user = store.getters['user']
-      console.log(`uid: ${user.id}`)
       store.dispatch('getUserPosts', {user})
   },
   computed: {
@@ -48,12 +43,7 @@ export default {
   },
   methods: {
     handleClick(todo) {
-      // this.$route.push(`/todos/${todo.id}`)
-    },
-    onClick() {
-      const user = this.$store.getters['user']
-      console.log(`uid: ${user.id}`)
-      this.$store.dispatch('getUserPosts', {user})
+      this.$route.push(`/todos/${todo.id}`)
     },
   }
 
