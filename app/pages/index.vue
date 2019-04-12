@@ -13,14 +13,26 @@
 
 <script>
 import {mapGetters, mapActions} from 'vuex'
+import firebase from '~/plugins/firebase'
+import Cookies from 'universal-cookie'
 
 export default {
-  asyncData ({ redirect, store }) {
-    return {
-      isCreateMode: false,
-      formData: {
-        id: ''
+  async asyncData ({ redirect, store }) {
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        const { uid, displayName, email } = user
+        console.log('uid:' + uid)
+        console.log('email:' + email)
+        console.log('displayName:' + displayName)
+        store.dispatch ('setUser', { user: { id: uid, name: displayName, email: email }})
+
+        const cookies = new Cookies()
+        const cookie = {id: uid, name: displayName, email: email}
+        cookies.set('user', JSON.stringify(cookie))
+        redirect('/todos')
       }
+    })
+    return {
     }
   },
   computed: {

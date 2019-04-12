@@ -3,7 +3,11 @@ import pkg from './package'
 export default {
   mode: 'spa',
   srcDir: 'app',
-
+  router: {
+    middleware: [
+      'auth-cookie'
+    ]
+  },
   /*
   ** Headers of the page
   */

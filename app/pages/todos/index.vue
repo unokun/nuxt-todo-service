@@ -1,5 +1,9 @@
 <template>
-  <selection class="container posts-page">
+  <section class="container todos-page">
+    <div class="text-right">
+      <el-button type="primary" @click="onClick">Todo一覧取得</el-button>
+    </div>
+
     <el-card>
       <div slot="header" class="clearfix">
         <span>TODO一覧</span>
@@ -11,62 +15,55 @@
         class="table"
         >
         <el-table-column prop="title" label="タイトル" />
-        <el-table-column prop="user.id" label="作成者" width="180" />
+        <el-table-column prop="body" label="詳細" />
         <el-table-column prop="created_at" label="作成日時" width="240" />
       </el-table>
     </el-card>
-  </selection>
+  </section>
 </template>
 
 <script>
-// import moment from '~/plugins/moment'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
+import moment from '~/plugins/moment'
+import Cookies from 'universal-cookie'
+import firebase from '~/plugins/firebase'
 
 export default {
-  async asyncData ({ store }) {
-    // await store.dispatch('posts/fetchPosts')
+  async asyncData({ redirect, store }) {
+      const user = store.getters['user']
+      console.log(`uid: ${user.id}`)
+      store.dispatch('getUserPosts', {user})
   },
   computed: {
-    showPosts () {
-      return [
-        {
-        id: '001',
-        title: 'title1',
-        body: 'body1',
-        created_at: '2019/04/11 12:00:00',
-        user: {
-          id: 'unokun'
-        }
-        },
-        {
-        id: '002',
-        title: 'title1',
-        body: 'body1',
-        created_at: '2019/04/11 12:00:00',
-        user: {
-          id: 'unokun'
-        }
-        }
-      ]
-      /*
-      return this.posts.map (post => {
-        post.created_at = moment(post.created_at).format('YYYY/MM/DD HH:mm:ss')
-        return post
+    showTodos () {
+      if (this.todos.length === 0) {
+        return []
+      }
+      return this.todos.map (todo => {
+        todo.created_at = moment(todo.created_at).format('YYYY/MM/DD HH:mm:ss')
+        return todo
       })
-      */
     },
-    // ...mapGetters('posts', ['posts'])
+    ...mapGetters(['user', 'todos'])
   },
   methods: {
-    handleClick(post) {
-      // this.$route.push(`/posts/${post.id}`)
-    }
+    handleClick(todo) {
+      // this.$route.push(`/todos/${todo.id}`)
+    },
+    onClick() {
+      const user = this.$store.getters['user']
+      console.log(`uid: ${user.id}`)
+      this.$store.dispatch('getUserPosts', {user})
+    },
   }
+
 }
+
+
 </script>
 
 <style>
-.posts-page .el-table__row {
+.todos-page .el-table__row {
   cursor: pointer;
 }
 </style>
