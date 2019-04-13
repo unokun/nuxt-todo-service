@@ -26,8 +26,8 @@ import firebase from '~/plugins/firebase'
 
 export default {
   async asyncData({ redirect, store }) {
-      const user = store.getters['user']
-      store.dispatch('getUserPosts', {user})
+    const user = store.getters['user']
+    store.dispatch('getUserPosts', {user})
   },
   computed: {
     showTodos () {
@@ -46,10 +46,7 @@ export default {
       this.$router.push(`/todos/${todo.id}`)
     },
   }
-
 }
-
-
 </script>
 
 <style>
