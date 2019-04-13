@@ -17,6 +17,8 @@ $ yarn add moment universal-cookie lodash.clonedeep
 
 Firebaseのプロジェクトは事前に作成している前提です。
 
+[Cloud Firestore with Vue\.jsで簡単なメモアプリを実装する \- Qiita](https://qiita.com/rubytomato@github/items/78087a2c69389f642760)
+
 ```bash
 $ yarn add firebase firebase-tools
 
