@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     handleClick(todo) {
-      this.$route.push(`/todos/${todo.id}`)
+      this.$router.push(`/todos/${todo.id}`)
     },
   }
 
